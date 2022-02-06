@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        window.__LOCAL_CONFIG = window.__LOCAL_CONFIG || {};
+        window.__LOCAL_CONFIG.PAGE_SCRIPTS = [
+            "tabulator-custom-tree-extensions.js",
+            "tree-test-1.js",
+            "tree-test-1b.js",
+        ];
+    </script>
+
+    <style type="text/css">
+        body {
+            padding-top: 70px;
+        }
+
+        .tabulator .tabulator-tableHolder .tabulator-table .tabulator-row.disabled {
+            background: #adadad !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a class="navbar-brand" href="#">Test</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <button type="button" class="btn btn-primary" id="example1-btn">Example 1: default dataTreeFilter</button>
+        <button type="button" class="btn btn-primary" id="example2-btn">Example 2: filtering within tree + filtered selection</button>
+        <p>Demo: you could try to look for green apples...</p>
+    </div>
+
+    <div class="container-fluid">
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-expand-all">Expand All</button>
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-collapse-all">Collapse
+            All</button>
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-collapse-all-but-selected">Collapse All But
+            Selected</button>
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-clear-selection">Clear
+            Selection</button>
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-go-to-selection">Go To
+            Selection</button>
+
+        <div id="table1"></div>
+    </div>
+
+    <script type="text/javascript" src="tests-common-4.9.js">
+    </script>
+    <script type="text/javascript" src="../tests-common.js">
+    </script>
+</body>
+
+</html>

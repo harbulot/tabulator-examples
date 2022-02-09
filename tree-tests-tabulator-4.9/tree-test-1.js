@@ -45,28 +45,33 @@ $("#example1-btn").click(function() {
             cellClick: function(e, cell) {
                 cell.getRow().toggleSelect();
             },
+            headerSort: false,
         },
         {
             title: "Label",
             field: "label",
             widthGrow: 2,
+            headerSort: false,
             headerFilter: "input",
         },
         {
             title: "Color",
             field: "color",
             widthGrow: 2,
+            headerSort: false,
             headerFilter: "input",
         },
         {
             title: "Fruit",
             field: "fruit",
             widthGrow: 2,
+            headerSort: false,
             headerFilter: "input",
         },
         {
             title: "ID",
             field: "id",
+            headerSort: false,
             headerFilter: "input",
             widthGrow: 0.5,
         },

@@ -95,11 +95,13 @@ $("#example2-btn").click(function() {
             cellClick: function(e, cell) {
                 cell.getRow().toggleSelect();
             },
+            headerSort: false,
         },
         {
             title: "Label",
             field: "label",
             widthGrow: 2,
+            headerSort: false,
             headerFilter: "input",
             headerFilterFunc: deepMatchHeaderFilter,
         },
@@ -107,6 +109,7 @@ $("#example2-btn").click(function() {
             title: "Color",
             field: "color",
             widthGrow: 2,
+            headerSort: false,
             headerFilter: "input",
             headerFilterFunc: deepMatchHeaderFilter,
         },
@@ -114,12 +117,14 @@ $("#example2-btn").click(function() {
             title: "Fruit",
             field: "fruit",
             widthGrow: 2,
+            headerSort: false,
             headerFilter: "input",
             headerFilterFunc: deepMatchHeaderFilter,
         },
         {
             title: "ID",
             field: "id",
+            headerSort: false,
             headerFilter: "input",
             widthGrow: 0.5,
             headerFilterFunc: deepMatchHeaderFilter,
@@ -249,7 +254,7 @@ $("#example2-collapse-all").click(function() {
         /*rows*/ null,
         /*unlessSelected*/ false,
         /*refresh*/ true,
-        /*reformat*/ false
+        /*reformat*/ true
     );
 });
 $("#example2-collapse-all-but-selected").click(function() {
@@ -258,7 +263,7 @@ $("#example2-collapse-all-but-selected").click(function() {
         /*rows*/ null,
         /*unlessSelected*/ true,
         /*refresh*/ true,
-        /*reformat*/ false
+        /*reformat*/ true
     );
 });
 $("#example2-clear-selection").click(function() {

@@ -99,17 +99,7 @@ SOFTWARE.
         return output;
     }
 
-    const DATA_TO_LOAD_ARR = [{ type: "js", href: "local-config.js" }];
-    for (const cssHref of Object.values(window.__LOCAL_CONFIG.CSS_HREF_MAP)) {
-        DATA_TO_LOAD_ARR.push({ type: "css", href: cssHref });
-    }
-    for (const jsHref of Object.values(window.__LOCAL_CONFIG.JS_HREF_MAP)) {
-        DATA_TO_LOAD_ARR.push({ type: "js", href: jsHref });
-    }
-    for (const jsHref of window.__LOCAL_CONFIG.PAGE_SCRIPTS || []) {
-        DATA_TO_LOAD_ARR.push({ type: "js", href: jsHref });
-    }
-
+    const DATA_TO_LOAD_ARR = [];
     function generateNextLoader(dataToLoadArr) {
         return function() {
             const [head, ...tail] = dataToLoadArr;
@@ -139,5 +129,23 @@ SOFTWARE.
         };
     }
 
-    generateNextLoader(DATA_TO_LOAD_ARR)();
+    const firstChainedLoader = function() {
+        for (const cssHref of Object.values(window.__LOCAL_CONFIG.CSS_HREF_MAP)) {
+            DATA_TO_LOAD_ARR.push({ type: "css", href: cssHref });
+        }
+        for (const jsHref of Object.values(window.__LOCAL_CONFIG.JS_HREF_MAP)) {
+            DATA_TO_LOAD_ARR.push({ type: "js", href: jsHref });
+        }
+        for (const jsHref of window.__LOCAL_CONFIG.PAGE_SCRIPTS || []) {
+            DATA_TO_LOAD_ARR.push({ type: "js", href: jsHref });
+        }
+        generateNextLoader(DATA_TO_LOAD_ARR)();
+    };
+
+    const localConfigScriptElem = document.createElement("script");
+    localConfigScriptElem.type = "text/javascript";
+    localConfigScriptElem.src = "local-config.js";
+    localConfigScriptElem.addEventListener("load", firstChainedLoader);
+    localConfigScriptElem.addEventListener("error", firstChainedLoader);
+    scriptContainerElem.appendChild(localConfigScriptElem);
 })();

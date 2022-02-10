@@ -183,9 +183,14 @@ Tabulator.customExtensions.tableTreeFindRow = function(table, id, rows) {
     return null;
 };
 
-Tabulator.customExtensions.tableTreeIndexRows = function(table, rowsIndex, rows, indexFunction) {
-    if (rowsIndex == null) {
-        rowsIndex = {};
+Tabulator.customExtensions.tableTreeIndexRows = function(
+    table,
+    indexToRowMap,
+    rows,
+    indexFunction
+) {
+    if (indexToRowMap == null) {
+        indexToRowMap = {};
     }
     if (indexFunction == null) {
         indexFunction = function(row) {
@@ -205,7 +210,7 @@ Tabulator.customExtensions.tableTreeIndexRows = function(table, rowsIndex, rows,
     }
 
     for (let row of rows) {
-        rowsIndex[indexFunction(row)] = row;
+        indexToRowMap[indexFunction(row)] = row;
 
         let rowDataTree = row.modules.dataTree;
         if (rowDataTree.children) {
@@ -215,14 +220,14 @@ Tabulator.customExtensions.tableTreeIndexRows = function(table, rowsIndex, rows,
 
             Tabulator.customExtensions.tableTreeIndexRows(
                 null,
-                rowsIndex,
+                indexToRowMap,
                 rowDataTree.children,
                 indexFunction
             );
         }
     }
 
-    return rowsIndex;
+    return indexToRowMap;
 };
 
 Tabulator.customExtensions.tableTreeEnsureRowExpanded = function(table, row) {
@@ -245,10 +250,10 @@ Tabulator.customExtensions.tableTreeSelectIds = function(
     }
     let selectedRows = [];
 
-    const rowsIndex = Tabulator.customExtensions.tableTreeIndexRows(table);
+    const indexToRowMap = Tabulator.customExtensions.tableTreeIndexRows(table);
 
     for (let id of ids) {
-        let row = rowsIndex[id];
+        let row = indexToRowMap[id];
         if (row == null) {
             if (!ignoreNotFound) {
                 throw "Requested ID not found in table tree: " + id;

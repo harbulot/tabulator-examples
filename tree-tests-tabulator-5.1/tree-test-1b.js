@@ -230,6 +230,10 @@ $("#example2-btn").click(function() {
          */
         table.modules.filter.changed = false;
     });
+
+    table1.on("rowSelectionChanged", function(data, rows) {
+        $("#example2-selected-ids").val(rows.map(x => x.getIndex()).join(","));
+    });
 });
 
 $("#example2-expand-all").click(function() {
@@ -280,4 +284,15 @@ $("#example2-go-to-selection").click(function() {
         }
         multiSelectionGoToIndex++;
     }
+});
+
+$("#example2-select-ids").click(function() {
+    let idsToSelect = $("#example2-selected-ids")
+        .val()
+        .split(",")
+        .map(Number)
+        .filter(x => !isNaN(x));
+
+    table1.deselectRow();
+    Tabulator.customExtensions.tableTreeSelectIds(table1, idsToSelect, true, true);
 });

@@ -32,9 +32,10 @@ In "Example 2":
 Independently of filtering, there is also a "Go To Selection" feature, which will show and scroll to the selected rows (multiple clicks will move to the next rows in case multiple rows are selected).
 
 
-The paths to the libraries used are defined in `tests-common-4.9.js`, but these can be overridden in a `local-config.js` file placed next to it:
+The paths to the libraries used are defined in `default-config.js`, but these can be overridden in `local-config.js` and `local-config-THE_TEST_NAME_WITHOUT_HTML_EXTENSION.js` files placed next to it (mainly useful for local tests):
 
 ```javascript
 // window.__LOCAL_CONFIG.CSS_HREF_MAP.tabulator = "";
 // window.__LOCAL_CONFIG.JS_HREF_MAP.tabulator = "";
+// window.__LOCAL_CONFIG.JS_BYPASS_CORB_MAP.tabulator = true; // If need to bypass CORB (bad idea to bypass in general).
 ```

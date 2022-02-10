@@ -99,7 +99,6 @@ SOFTWARE.
         return output;
     }
 
-    const DATA_TO_LOAD_ARR = [];
     function generateNextLoader(dataToLoadArr) {
         return function() {
             const [head, ...tail] = dataToLoadArr;
@@ -107,34 +106,61 @@ SOFTWARE.
                 return;
             }
 
-            let elem;
-            switch (head.type) {
-                case "css":
-                    elem = document.createElement("link");
-                    elem.rel = "stylesheet";
-                    elem.type = "text/css";
-                    elem.href = head.href;
-                    break;
-                case "js":
-                    elem = document.createElement("script");
-                    elem.type = "text/javascript";
-                    elem.src = head.href;
-                    break;
+            if (typeof head === "function") {
+                return head();
             }
 
             const callback = generateNextLoader(tail);
-            elem.addEventListener("load", callback);
-            elem.addEventListener("error", callback);
-            scriptContainerElem.appendChild(elem);
+
+            if (head.type === "js" && head.bypassCorb) {
+                // Note: this is an ugly way to bypass CORB restrictions. It's generally not a good idea to bypass them.
+                let elem = document.createElement("script");
+                elem.type = "text/javascript";
+                scriptContainerElem.appendChild(elem);
+
+                let req = new XMLHttpRequest();
+                req.responseType = "text";
+                req.addEventListener("load", function() {
+                    if (req.readyState === req.DONE && req.status === 200) {
+                        elem.textContent = req.responseText;
+                    }
+
+                    callback();
+                });
+                req.addEventListener("error", callback);
+
+                req.open("GET", head.href);
+                req.send();
+            } else {
+                let elem;
+                switch (head.type) {
+                    case "css":
+                        elem = document.createElement("link");
+                        elem.rel = "stylesheet";
+                        elem.type = "text/css";
+                        elem.href = head.href;
+                        break;
+                    case "js":
+                        elem = document.createElement("script");
+                        elem.type = "text/javascript";
+                        elem.src = head.href;
+                        break;
+                }
+                elem.addEventListener("load", callback);
+                elem.addEventListener("error", callback);
+                scriptContainerElem.appendChild(elem);
+            }
         };
     }
 
     const firstChainedLoader = function() {
+        const DATA_TO_LOAD_ARR = [];
         for (const cssHref of Object.values(window.__LOCAL_CONFIG.CSS_HREF_MAP)) {
             DATA_TO_LOAD_ARR.push({ type: "css", href: cssHref });
         }
-        for (const jsHref of Object.values(window.__LOCAL_CONFIG.JS_HREF_MAP)) {
-            DATA_TO_LOAD_ARR.push({ type: "js", href: jsHref });
+        for (const [jsKey, jsHref] of Object.entries(window.__LOCAL_CONFIG.JS_HREF_MAP)) {
+            const bypassCorb = !!(window.__LOCAL_CONFIG.JS_BYPASS_CORB_MAP || {})[jsKey];
+            DATA_TO_LOAD_ARR.push({ type: "js", href: jsHref, bypassCorb: !!bypassCorb });
         }
         for (const jsHref of window.__LOCAL_CONFIG.PAGE_SCRIPTS || []) {
             DATA_TO_LOAD_ARR.push({ type: "js", href: jsHref });
@@ -142,10 +168,16 @@ SOFTWARE.
         generateNextLoader(DATA_TO_LOAD_ARR)();
     };
 
-    const localConfigScriptElem = document.createElement("script");
-    localConfigScriptElem.type = "text/javascript";
-    localConfigScriptElem.src = "local-config.js";
-    localConfigScriptElem.addEventListener("load", firstChainedLoader);
-    localConfigScriptElem.addEventListener("error", firstChainedLoader);
-    scriptContainerElem.appendChild(localConfigScriptElem);
+    const currentFilename = window.location.pathname
+        .split("/")
+        .pop()
+        .replace(/\.[^/.]+$/, "");
+    const CONFIG_SCRIPTS_ARR = [
+        { type: "js", href: "default-config.js" },
+        { type: "js", href: "local-config.js" },
+        { type: "js", href: "default-config-" + currentFilename + ".js" },
+        { type: "js", href: "local-config-" + currentFilename + ".js" },
+        firstChainedLoader,
+    ];
+    generateNextLoader(CONFIG_SCRIPTS_ARR)();
 })();

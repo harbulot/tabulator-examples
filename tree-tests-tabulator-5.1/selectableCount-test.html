@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        window.__LOCAL_CONFIG = window.__LOCAL_CONFIG || {};
+        window.__LOCAL_CONFIG.PAGE_SCRIPTS = [
+            "selectableCount-test.js",
+        ];
+    </script>
+
+    <style type="text/css">
+        body {
+            padding-top: 70px;
+        }
+
+        .tabulator .tabulator-tableHolder .tabulator-table .tabulator-row.disabled {
+            background: #adadad !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="tree-test-1.html">Tree Test 1</a>
+                    <li><a href="thousandSym-test.html">Thousand Sym</a>
+                    <li class="active"><a href="selectableCount-test.html">Selectable Count (no patch)</a>
+                    <li><a href="selectableCount-test-withpatch.html">Selectable Count (patch)</a>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="panel panel-default col-lg-3 col-md-6 col-sm-12">
+            <div class="panel-heading">
+                <pre>{ selectable: "highlight" }</pre>
+                This implies an unlimited number of selections. Selection is done by clicking on the checkboxes, but
+                clicking on the rows (except in the checkbox cells) doesn't affect the selection.
+            </div>
+            <div class="panel-body">
+                <div id="table1"></div>
+            </div>
+        </div>
+        <div class="panel panel-default col-lg-3 col-md-6 col-sm-12">
+            <div class="panel-heading">
+                <pre>{ selectable: true }</pre>
+                This enables an unlimited number of selections. Clicking on the rows also affects the selection.
+            </div>
+            <div class="panel-body">
+                <div id="table2"></div>
+            </div>
+        </div>
+        <div class="panel panel-default col-lg-3 col-md-6 col-sm-12">
+            <div class="panel-heading">
+                <pre>{ selectable: 1 }</pre>
+                This limits the selection count to 1. Clicking on the rows also affects the selection.
+            </div>
+            <div class="panel-body">
+                <div id="table3"></div>
+            </div>
+        </div>
+        <div class="panel panel-default col-lg-3 col-md-6 col-sm-12">
+            <div class="panel-heading">
+                <pre>{ selectable: "highlight", selectableCount: 1 }</pre>
+                Selection is done by clicking on the checkboxes, but
+                clicking on the rows (except in the checkbox cells) doesn't affect the selection.
+                <ul>
+                    <li><b>without patch: </b>we can't limit the number of selected items</li>
+                    <li>with patch: this can be limited (1 in this example)</li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div id="table4"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../tests-common.js">
+    </script>
+</body>
+
+</html>

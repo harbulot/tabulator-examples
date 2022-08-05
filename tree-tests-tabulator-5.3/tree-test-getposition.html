@@ -4,7 +4,8 @@
     <script type="text/javascript">
         window.__LOCAL_CONFIG = window.__LOCAL_CONFIG || {};
         window.__LOCAL_CONFIG.PAGE_SCRIPTS = [
-            "thousandSym-test.js",
+            "tabulator-custom-tree-extensions.js",
+            "tree-test-getposition.js",
         ];
     </script>
 
@@ -31,9 +32,7 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="tree-test-1.html">Tree Test 1</a>
-                    <li><a href="thousandSym-test.html">Thousand Sym</a>
-                    <li class="active"><a href="thousandSym-test-withpatch.html">Thousand Sym (patch)</a>
-                    <li><a href="selectableCount-test.html">Selectable Count</a>
+                    <li><a href="selectableMaxRows-test.html">Selectable Max Rows</a>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -41,7 +40,25 @@
     </nav>
 
     <div class="container-fluid">
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-expand-all">Expand
+            All</button>
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-collapse-all">Collapse
+            All</button>
+        <button type="button" class="btn btn-default example2" style="display:none"
+            id="example2-collapse-all-but-selected">Collapse All But
+            Selected</button>
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-clear-selection">Clear
+            Selection</button>
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-go-to-selection">Go To
+            Selection</button>
+
         <div id="table1"></div>
+
+        <button type="button" class="btn btn-default example2" style="display:none" id="example2-dump-data">Dump
+            Data</button>
+        <div class="clearfix"></div>
+        <pre class="col-md-6" id="output1"></pre>
+        <pre class="col-md-6" id="output2"></pre>
     </div>
 
     <script type="text/javascript" src="../tests-common.js">

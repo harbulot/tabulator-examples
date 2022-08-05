@@ -12,7 +12,7 @@ window.__LOCAL_CONFIG.CSS_HREF_MAP = {
 };
 
 window.__LOCAL_CONFIG.JS_HREF_MAP = {
-    tabulator: "https://unpkg.com/tabulator-tables@5.1.0/dist/js/tabulator.js",
+    tabulator: "https://unpkg.com/tabulator-tables@5.3.1/dist/js/tabulator.js",
     jquery: "https://code.jquery.com/jquery-3.6.0.min.js",
     bootstrap: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js",
     seedrandom: "https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js",

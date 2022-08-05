@@ -124,7 +124,6 @@ SOFTWARE.
                     if (req.readyState === req.DONE && req.status === 200) {
                         elem.textContent = req.responseText;
                     }
-
                     callback();
                 });
                 req.addEventListener("error", callback);
@@ -174,8 +173,8 @@ SOFTWARE.
         .replace(/\.[^/.]+$/, "");
     const CONFIG_SCRIPTS_ARR = [
         { type: "js", href: "default-config.js" },
-        { type: "js", href: "local-config.js" },
         { type: "js", href: "default-config-" + currentFilename + ".js" },
+        { type: "js", href: "local-config.js" },
         { type: "js", href: "local-config-" + currentFilename + ".js" },
         firstChainedLoader,
     ];

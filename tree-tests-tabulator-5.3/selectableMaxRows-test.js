@@ -1,5 +1,5 @@
 /*jslint node: true, eqnull: true, esversion: 6, browser: true */
-/*global Tabulator: false, $: false, table1:true, table1Data:true */
+/*global Tabulator: false, $: false */
 /*
 The MIT License (MIT)
 
@@ -26,49 +26,50 @@ SOFTWARE.
 
 "use strict";
 
-let columns = [
+const columns = [
+    {
+        formatter: "rowSelection",
+        titleFormatter: "rowSelection",
+        width: 20,
+        hozAlign: "center",
+        headerHozAlign: "center",
+        cssClass: "rowSelection",
+        cellClick: function(e, cell) {
+            cell.getRow().toggleSelect();
+        },
+    },
+    {
+        title: "ID",
+        field: "id",
+    },
     {
         title: "Label",
         field: "label",
     },
-    {
-        title:
-            'Money formatter (<span style="font-family:monospace;">thousand</span> is undefined)',
-        field: "num1",
-        hozAlign: "right",
-        formatter: "money",
-        formatterParams: {
-            precision: 0,
-        },
-    },
-    {
-        title: 'Money formatter (<span style="font-family:monospace;">thousand: false</span>)',
-        field: "num2",
-        hozAlign: "right",
-        formatter: "money",
-        formatterParams: {
-            thousand: false,
-            precision: 0,
-        },
-    },
 ];
 
-let table1Data = [
-    { label: "A", num1: 1234, num2: 4321 },
-    { label: "B", num1: 5678, num2: 8765 },
-];
+const tableData = [];
+for (let i = 1; i <= 30; i++) {
+    tableData.push({ id: i, label: "Item " + i });
+}
 
 const options = {
     layout: "fitColumns",
-    height: 550,
-
+    height: 300,
     selectable: "highlight",
-
     columnDefaults: {
         headerSort: false,
     },
     columns: columns,
-    data: table1Data,
+    data: tableData,
 };
 
-var table1 = new Tabulator(document.getElementById("table1"), options);
+const options1 = $.extend({}, options, { selectable: "highlight" });
+const options2 = $.extend({}, options, { selectable: true });
+const options3 = $.extend({}, options, { selectable: 1 });
+const options4 = $.extend({}, options, { selectable: "highlight", selectableMaxRows: 1 });
+
+let table1 = new Tabulator(document.getElementById("table1"), options1);
+let table2 = new Tabulator(document.getElementById("table2"), options2);
+let table3 = new Tabulator(document.getElementById("table3"), options3);
+let table4 = new Tabulator(document.getElementById("table4"), options4);

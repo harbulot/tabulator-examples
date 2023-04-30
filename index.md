@@ -7,6 +7,8 @@ The examples using Tabulator 4.9 can be seen in [tree-tests-tabulator-4.9/tree-t
 
 The examples using Tabulator 5.1 can be seen in [tree-tests-tabulator-5.1/tree-test-1.html](tree-tests-tabulator-5.1/tree-test-1.html).
 
+The examples using Tabulator 5.3 can be seen in [tree-tests-tabulator-5.3/tree-test-1.html](tree-tests-tabulator-5.3/tree-test-1.html).
+
 
 - Clicking on "Example 1" shows the default Tabulator behaviour.
 - Clicking on "Example 2" shows the behaviour with extensions.
